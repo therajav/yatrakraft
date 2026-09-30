@@ -22,7 +22,7 @@ while ( have_posts() ) {
 
 $yk_has_cart = false !== strpos( $yk_content, 'wpte-checkout__page-layout' );
 $yk_trips    = home_url( '/trips/' );
-$yk_wa       = yk_whatsapp_url( 'Hi YatraKraft, I need help completing my booking.' );
+$yk_wa       = yatrakraft_whatsapp_url( 'Hi YatraKraft, I need help completing my booking.' );
 ?>
 
 <main id="primary" class="yk-checkout">

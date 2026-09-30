@@ -19,14 +19,15 @@ have wiped it out. `themes/yatrakraft` is our own child of **Travelscape**:
 | `theme.json` | Travel Journey's font families/sizes (Travelscape skips its runtime theme.json injection for child themes) |
 | `inc/customizer.php` | Optional header button (Customizer → Header → Header Button) |
 | `inc/theme-mods.php` | Carries Travel Journey's Customizer settings over (see below) |
-| `inc/yatrakraft.php` | WTE page detection, template routing, asset enqueue, body classes, profile icon, hides "My Account" menu item, `yk_guide_card()` |
+| `inc/yatrakraft.php` | WTE page detection, template routing, asset enqueue, body classes, profile icon, hides "My Account" menu item, `yatrakraft_guide_card()` |
 | `home.php`, `category.php` → `yk/guides-index.php` | Travel Guides index |
 | `yk-checkout.php`, `yk-thankyou.php`, `yk/trust-strip.php` | WP Travel Engine checkout / thank-you wrappers |
 | `assets/css/yk-global.css` | Header profile icon + alignment (site-wide) |
 | `assets/css/yk-redesign.css` | Guides, checkout, thank-you (only on those pages) |
 
-Differences from the Travel Journey copy: functions renamed `travel_journey_*` →
-`yatrakraft_*`, style handle `travel-journey-style` → `yatrakraft-style`, text
+Differences from the Travel Journey copy: functions renamed `travel_journey_*` /
+`yk_*` → `yatrakraft_*` (and `YK_WHATSAPP_NUMBER` → `YATRAKRAFT_WHATSAPP_NUMBER`),
+style handle `travel-journey-style` → `yatrakraft-style`, text
 domain `yatrakraft`, header-button theme mods renamed
 `travel_journey_header_button_*` → `yatrakraft_header_button_*`, the duplicated
 trust strip moved into one partial, and Travel Journey's dead
@@ -78,3 +79,10 @@ Never publish without the owner's go-ahead, and take a Hostinger backup first.
   plus a fixed-size flex box to centre with the profile icon.
 - Travelscape's `style.css` is 74 KB; WPVibe will not read files over 64 KB.
 - WPCode also injects the logo size (56 / 48 / 44 px heights).
+- WPVibe's `write_file` refuses PHP that declares a function the *active* theme
+  already declares, even though only one theme loads at runtime. That is why
+  this theme's helpers are `yatrakraft_*`, not Travel Journey's `yk_*`. CSS
+  classes (`.yk-*`, `.ykg-*`) are unaffected.
+- `create_classic_theme` scaffolds its own templates (`index.php`, `header.php`,
+  `front-page.php`, `theme.css`, Alpine, ...). They must be deleted, otherwise
+  they override Travelscape's templates.

@@ -22,8 +22,8 @@ while ( have_posts() ) {
 
 $yk_has_booking = ( false !== strpos( $yk_content, 'wpte-thankyou__' ) || false !== strpos( $yk_content, 'thank-you-container' ) );
 $yk_guides      = get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : home_url( '/blog/' );
-$yk_account     = get_permalink( yk_account_page_id() );
-$yk_wa          = yk_whatsapp_url( 'Hi YatraKraft, I just made a booking on your website and have a question.' );
+$yk_account     = get_permalink( yatrakraft_account_page_id() );
+$yk_wa          = yatrakraft_whatsapp_url( 'Hi YatraKraft, I just made a booking on your website and have a question.' );
 ?>
 
 <main id="primary" class="yk-checkout yk-thankyou">

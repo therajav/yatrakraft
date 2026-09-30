@@ -39,7 +39,7 @@ if ( ! empty( $wp_query->posts ) ) {
 	$yk_hero = get_the_post_thumbnail_url( $wp_query->posts[0], 'full' );
 }
 
-$yk_wa = yk_whatsapp_url( 'Hi YatraKraft, I read your travel guide and would like help planning a trip.' );
+$yk_wa = yatrakraft_whatsapp_url( 'Hi YatraKraft, I read your travel guide and would like help planning a trip.' );
 ?>
 
 <section class="yk-guides-hero"<?php echo $yk_hero ? ' style="--yk-hero:url(' . esc_url( $yk_hero ) . ')"' : ''; ?>>
@@ -95,13 +95,13 @@ $yk_wa = yk_whatsapp_url( 'Hi YatraKraft, I read your travel guide and would lik
 			while ( have_posts() ) :
 				the_post();
 				if ( 0 === $yk_i && 1 === $yk_paged && ! $yk_is_cat ) {
-					yk_guide_card( true );
+					yatrakraft_guide_card( true );
 				} else {
 					if ( ! $yk_grid_open ) {
 						echo '<div class="yk-grid">';
 						$yk_grid_open = true;
 					}
-					yk_guide_card( false );
+					yatrakraft_guide_card( false );
 				}
 				$yk_i++;
 			endwhile;

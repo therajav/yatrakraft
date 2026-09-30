@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$yk_wa = yk_whatsapp_url( yk_is_thankyou() ? 'Hi YatraKraft, I just made a booking on your website and have a question.' : 'Hi YatraKraft, I need help completing my booking.' );
+$yk_wa = yatrakraft_whatsapp_url( yatrakraft_is_thankyou() ? 'Hi YatraKraft, I just made a booking on your website and have a question.' : 'Hi YatraKraft, I need help completing my booking.' );
 ?>
 <aside class="yk-co-trust" aria-label="Why book with YatraKraft">
 	<div class="yk-co-trust__item">

@@ -113,7 +113,7 @@ function yatrakraft_header_desktop() {
 			$site_header->travelscape_header_logo();
 			$site_header->travelscape_header_menu();
 			yatrakraft_header_button();
-			yk_account_icon();
+			yatrakraft_account_icon();
 		echo '</div>';
 	echo '</div>';
 }
@@ -126,7 +126,7 @@ function yatrakraft_header_mobile() {
 			echo '<div class="row top-wrap">';
 				$site_header->travelscape_header_logo();
 				yatrakraft_header_button();
-				yk_account_icon();
+				yatrakraft_account_icon();
 				$site_header->travelscape_header_menu_toggle();
 			echo '</div>';
 			echo '<div class="row">';
