@@ -1,0 +1,40 @@
+/* YatraKraft — global header tweaks (profile icon) */
+
+/* Note: never set `display` on .header-desktop — the parent theme hides it on mobile. */
+.site-header .header-desktop { align-items: center; }
+.site-header .header-desktop .travelscape-menu-wrap { margin-left: auto; }
+
+.yk-account-link {
+	display: inline-flex; align-items: center; justify-content: center; flex: none;
+	width: 44px; height: 44px; margin-left: 20px; border-radius: 50%;
+	background: #fff; border: 1px solid #dfe6ea; color: #0f2230 !important;
+	box-shadow: 0 1px 2px rgba(15, 34, 48, .06);
+	transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+	text-decoration: none !important;
+}
+.yk-account-link svg { width: 21px; height: 21px; fill: currentColor; }
+.yk-account-link:hover,
+.yk-account-link:focus-visible { background: #0b5a86; border-color: #0b5a86; color: #fff !important; transform: translateY(-1px); }
+.yk-account-link:focus-visible { outline: 3px solid rgba(11, 90, 134, .3); outline-offset: 2px; }
+.yk-account-link.is-logged-in { border-color: #0b5a86; color: #0b5a86 !important; }
+.yk-account-link.is-logged-in:hover { color: #fff !important; }
+
+/* Desktop: the theme's nav has 10px top / 0 bottom padding, so its text sits ~5px
+   below the header's centre line. Match that offset so the icon lines up with the menu text. */
+.site-header .header-desktop .yk-account-link { margin-top: 10px; }
+
+/* Mobile header: logo left, then profile icon + hamburger, all on one centre line.
+   The hamburger is an inline SVG inside a link, which adds a text-baseline gap under it
+   and throws off its centre — so both buttons get the same fixed-height flex box. */
+.site-header .header-mobile .top-wrap { display: flex; flex-wrap: nowrap; align-items: center; }
+.site-header .header-mobile .top-wrap .site-branding { min-width: 0; flex: 1 1 auto; margin-top: 0; margin-bottom: 0; }
+.site-header .header-mobile .top-wrap .yk-account-link,
+.site-header .header-mobile .top-wrap .menu-toggle {
+	align-self: center; flex: none; margin-top: 0; margin-bottom: 0; box-sizing: border-box;
+}
+.site-header .header-mobile .top-wrap .yk-account-link { width: 40px; height: 40px; margin-left: 12px; margin-right: 8px; }
+.site-header .header-mobile .top-wrap .menu-toggle {
+	display: inline-flex; align-items: center; justify-content: center;
+	width: 40px; height: 40px; padding: 0; line-height: 0;
+}
+.site-header .header-mobile .top-wrap .menu-toggle svg { display: block; width: 30px; height: 30px; }

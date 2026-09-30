@@ -1,0 +1,132 @@
+/*
+Theme Name: YatraKraft
+Theme URI: https://yatrakraft.com/
+Author: YatraKraft
+Author URI: https://yatrakraft.com/
+Description: YatraKraft child theme of Travelscape. Carries everything the site previously had in Travel Journey (header layout, colours, fonts, customizer) plus all YatraKraft customisations (Travel Guides, checkout, thank-you, header profile icon), so vendor updates to Travel Journey no longer overwrite them.
+Template: travelscape
+Version: 1.0.0
+Requires at least: 6.5
+Tested up to: 7.1
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: yatrakraft
+*/
+
+/* ---------------------------------------------------------
+   Base rules ported verbatim from Travel Journey 1.0.3 style.css
+   (header pill, nav, mobile header, sidebar, footer).
+   --------------------------------------------------------- */
+.travelscape-header .travelscape-header-top {
+	border-bottom: none;
+	padding: 10px 0 0 0;
+}
+.travelscape-social-media-wrap .social-icons a {
+    background-color: var(--subtle-color);
+}
+.travelscape-header-bottom {
+    padding: 10px 0;
+}
+.site-header {	
+	border-bottom: none;
+	padding-bottom: 10px;
+}
+.site-header .header-desktop {
+	word-wrap: break-word;
+	background-color: var(--subtle-color);	
+	border-radius: 22px;
+	padding: 20px 35px;	
+}
+.header-desktop .travelscape-header-button {
+    margin-left: auto;
+}
+.header-desktop .travelscape-header-button a {
+	color: var(--secondary-color);
+    font-size: 0.8em;
+	text-transform: uppercase;
+	font-weight: 600;
+	border-radius: 100px;
+	border: 1px solid var(--secondary-color);
+	padding: 10px 20px;
+}
+.header-desktop .travelscape-header-button a:active,
+.header-desktop .travelscape-header-button a:hover {
+	background-color: var(--secondary-color);
+	color: var(--secondary-color-inverse)
+}
+.header-desktop .main-navigation {
+	background-color: #ffffff;
+	border-radius: 22px;
+	padding: 10px 30px 0px 5px;
+}
+.header-desktop .main-navigation ul li a {
+    font-size: 16px;
+	font-weight: 500;
+    font-family: var(--font-family);
+    color: var(--heading-color);
+}
+
+.site-header .header-mobile {
+	background-color: var(--subtle-color);	
+	word-wrap: break-word;
+	border-radius: 22px;
+	padding: 15px 35px;
+    margin-left: -15px;
+    margin-right: -15px;	
+}
+.header-mobile .main-navigation ul li a {
+    font-size: 14px;
+	font-weight: 500;
+    font-family: var(--font-family);
+    color: var(--heading-color);
+}
+.header-mobile .main-navigation ul li {
+    margin-right: 18px;
+}
+.header-mobile .travelscape-header-button {
+    margin-left: auto;
+}
+.header-mobile .travelscape-header-button a {
+	color: var(--secondary-color);
+    font-size: 0.7em;
+	text-transform: uppercase;
+	font-weight: 600;
+	border-radius: 100px;
+	border: 1px solid var(--secondary-color);
+	padding: 8px 10px;
+}
+body.travelscape-right-sidebar #secondary {
+    border-left: 0;
+    background-color: #fafafa;
+    border-radius: 22px;
+}
+body.travelscape-left-sidebar #secondary {
+    border-left: 0;
+    background-color: #fafafa;
+    border-radius: 22px;
+}
+.site-footer {
+	border-top: 1px solid #F2E5DC;
+	background-color: #fff;
+	margin-top: 0;
+}
+.site-footer .travelscape-footer-top {	
+	background-color: #fff;
+}
+@media (max-width: 768px) { 
+	.site-header .header-mobile .site-branding {
+	width: 75%;
+}
+}
+@media (max-width: 480px) { 
+	.site-header .header-mobile .site-branding {
+	width: auto;
+	}
+	.travelscape-pagination {
+		margin-top: 20px;
+	}	
+	.site-footer .travelscape-footer-bottom .travelscape-payment-logo {
+		margin-left: 0;
+	}
+}
