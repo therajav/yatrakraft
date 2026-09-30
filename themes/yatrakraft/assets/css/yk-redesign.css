@@ -29,6 +29,17 @@ body.yk-guides-page, body.yk-checkout-page { overflow-x: hidden; }
 .yk-guides-hero *, .yk-guides *, .yk-checkout * { box-sizing: border-box; }
 .yk-guides img, .yk-checkout img { max-width: 100%; height: auto; }
 
+/* Travelscape styles every #primary as its content column: 52rem wide on no-sidebar
+   archives (blog, categories, search), 70% wide with side padding on pages (thank-you),
+   25px vertical padding everywhere, plus mobile overrides. Our <main id="primary">
+   templates are full width, so reset all of it (#page raises specificity above them). */
+body #page main#primary.yk-guides,
+body #page main#primary.yk-checkout {
+	width: 100%; max-width: none; margin: 0; padding-left: 0; padding-right: 0; float: none;
+}
+body #page main#primary.yk-guides { padding-top: 56px; padding-bottom: 88px; }
+body #page main#primary.yk-checkout { padding-top: 0; padding-bottom: 0; }
+
 .yk-wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
 /* Wide layout for Travel Guides */
 .yk-guides-page .yk-wrap { max-width: 1520px; padding-left: clamp(16px, 4vw, 56px); padding-right: clamp(16px, 4vw, 56px); }
@@ -116,7 +127,7 @@ body.yk-guides-page, body.yk-checkout-page { overflow-x: hidden; }
 .yk-chips a.is-active span { color: rgba(255, 255, 255, .7); }
 
 /* Listing */
-.yk-guides { padding: 56px 0 88px; background: var(--ykr-soft); }
+.yk-guides { background: var(--ykr-soft); }
 
 .ykg-card {
 	display: flex; flex-direction: column; margin: 0; padding: 0; overflow: hidden; min-width: 0;
@@ -133,7 +144,8 @@ body.yk-guides-page, body.yk-checkout-page { overflow-x: hidden; }
 	background: var(--ykr-sun); color: var(--ykr-ink); font-family: var(--ykr-font-text); font-size: 12px; font-weight: 700; line-height: 1;
 }
 .ykg-card__body { display: flex; flex-direction: column; flex: 1; min-width: 0; padding: 22px 24px 24px; }
-.ykg-card__cat {
+.ykg-card__cat,
+.ykg-card__cat:visited {
 	align-self: flex-start; margin-bottom: 10px; font-family: var(--ykr-font-text); font-size: 12px; font-weight: 600; line-height: 1.2;
 	letter-spacing: .08em; text-transform: uppercase; color: var(--ykr-tea); text-decoration: none;
 }
@@ -146,7 +158,7 @@ body.yk-guides-page, body.yk-checkout-page { overflow-x: hidden; }
 	display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: auto; padding-top: 16px;
 	border-top: 1px solid var(--ykr-line); font-family: var(--ykr-font-text); font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--ykr-muted);
 }
-.ykg-card__more { margin-left: auto; font-weight: 600; color: var(--ykr-brand); text-decoration: none; white-space: nowrap; }
+.ykg-card__more, .ykg-card__more:visited { margin-left: auto; font-weight: 600; color: var(--ykr-brand); text-decoration: none; white-space: nowrap; }
 .ykg-card__more:hover { text-decoration: underline; }
 
 /* Featured */
@@ -172,6 +184,7 @@ body.yk-guides-page, body.yk-checkout-page { overflow-x: hidden; }
 .yk-empty { max-width: 520px; margin: 0 auto; padding: 48px 32px; text-align: center; background: #fff; border-radius: var(--ykr-radius); box-shadow: var(--ykr-shadow); }
 .yk-empty h2 { margin: 0 0 8px; font-family: var(--ykr-font-head); font-size: 24px; font-weight: 700; color: var(--ykr-ink); }
 .yk-empty p { margin: 0 0 24px; font-family: var(--ykr-font-text); font-size: 16px; color: var(--ykr-body); }
+.yk-empty__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
 /* CTA */
 .ykg-cta {
@@ -193,7 +206,7 @@ body.yk-guides-page, body.yk-checkout-page { overflow-x: hidden; }
 .yk-checkout { background: var(--ykr-soft); padding-bottom: 0; font-family: var(--ykr-font-text); }
 .yk-co-head { background: #fff; border-bottom: 1px solid var(--ykr-line); padding: 28px 0 32px; }
 .yk-co-head__top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-.yk-co-back { font-family: var(--ykr-font-text); font-size: 14px; font-weight: 600; color: var(--ykr-body); text-decoration: none; }
+.yk-co-back, .yk-co-back:visited { font-family: var(--ykr-font-text); font-size: 14px; font-weight: 600; color: var(--ykr-body); text-decoration: none; }
 .yk-co-back:hover { color: var(--ykr-brand); }
 .yk-co-secure {
 	display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
@@ -203,7 +216,6 @@ body.yk-guides-page, body.yk-checkout-page { overflow-x: hidden; }
 .yk-checkout .yk-co-title { margin: 0 0 8px; font-family: var(--ykr-font-head); font-size: clamp(26px, 4vw, 40px); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; color: var(--ykr-ink); }
 .yk-checkout .yk-co-lead { max-width: 640px; margin: 0; font-family: var(--ykr-font-text); font-size: 16px; line-height: 1.6; color: var(--ykr-body); }
 .yk-co-body { padding-top: 32px; padding-bottom: 96px; }
-body .site main.yk-checkout { margin-bottom: 0; }
 
 /* Steps */
 .yk-checkout .wpte-checkout__steps { margin: 0 0 28px; padding: 0; background: none; border: 0; }
@@ -435,7 +447,7 @@ body .site main.yk-checkout { margin-bottom: 0; }
 	.yk-search button { height: 44px; padding: 0 16px; font-size: 14px; }
 	.yk-chips { padding: 14px 0; }
 	.yk-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-	.yk-guides { padding: 28px 0 56px; }
+	body #page main#primary.yk-guides { padding-top: 28px; padding-bottom: 56px; }
 	.ykg-card__body { padding: 18px 18px 20px; }
 	.ykg-card--featured { margin-bottom: 20px; }
 	.ykg-card--featured .ykg-card__body { padding: 20px 18px 22px; }
@@ -443,6 +455,8 @@ body .site main.yk-checkout { margin-bottom: 0; }
 	.ykg-card__more { margin-left: 0; width: 100%; }
 	.ykg-cta { padding: 28px 20px; margin-top: 40px; border-radius: 20px; }
 	.ykg-cta__actions .yk-btn { flex: 1 1 100%; }
+	.yk-empty { padding: 32px 20px; }
+	.yk-empty__actions .yk-btn { flex: 1 1 100%; }
 
 	.yk-co-head { padding: 20px 0 24px; }
 	.yk-co-body { padding-top: 20px; padding-bottom: 64px; }

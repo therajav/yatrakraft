@@ -1,6 +1,6 @@
 <?php
 /**
- * YatraKraft Travel Guides index (blog home + category archives).
+ * YatraKraft Travel Guides index (blog home, category archives and search results).
  *
  * @package YatraKraft
  */
@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $wp_query;
 
 $yk_is_cat   = is_category();
+$yk_search   = is_search();
 $yk_paged    = max( 1, (int) get_query_var( 'paged' ) );
 $yk_blog_url = get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : home_url( '/' );
 $yk_cats     = get_categories(
@@ -25,7 +26,16 @@ $yk_cats     = get_categories(
 );
 $yk_current  = $yk_is_cat ? get_queried_object_id() : 0;
 
-if ( $yk_is_cat ) {
+if ( $yk_search ) {
+	$yk_query = get_search_query();
+	$yk_found = (int) $wp_query->found_posts;
+	$yk_title = $yk_query ? sprintf( 'Results for “%s”', $yk_query ) : 'Search our travel guides';
+	if ( $yk_found ) {
+		$yk_lead = sprintf( 1 === $yk_found ? '%d guide matches your search.' : '%d guides match your search.', $yk_found );
+	} else {
+		$yk_lead = 'Nothing matched that search. Try a shorter phrase, pick a topic below, or ask us directly.';
+	}
+} elseif ( $yk_is_cat ) {
 	$yk_title = single_cat_title( '', false );
 	$yk_desc  = wp_strip_all_tags( category_description() );
 	$yk_lead  = $yk_desc ? $yk_desc : 'Practical, local advice to help you plan your trip with confidence.';
@@ -47,7 +57,7 @@ $yk_wa = yatrakraft_whatsapp_url( 'Hi YatraKraft, I read your travel guide and w
 		<nav class="yk-crumbs" aria-label="Breadcrumb">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
 			<span aria-hidden="true">/</span>
-			<?php if ( $yk_is_cat ) : ?>
+			<?php if ( $yk_is_cat || $yk_search ) : ?>
 				<a href="<?php echo esc_url( $yk_blog_url ); ?>">Travel Guides</a>
 				<span aria-hidden="true">/</span>
 				<span aria-current="page"><?php echo esc_html( $yk_title ); ?></span>
@@ -55,7 +65,7 @@ $yk_wa = yatrakraft_whatsapp_url( 'Hi YatraKraft, I read your travel guide and w
 				<span aria-current="page">Travel Guides</span>
 			<?php endif; ?>
 		</nav>
-		<p class="yk-eyebrow"><?php echo $yk_is_cat ? 'Travel Guides' : 'By locals, for travellers'; ?></p>
+		<p class="yk-eyebrow"><?php echo $yk_search ? 'Search' : ( $yk_is_cat ? 'Travel Guides' : 'By locals, for travellers' ); ?></p>
 		<h1 class="yk-guides-hero__title"><?php echo esc_html( $yk_title ); ?></h1>
 		<p class="yk-guides-hero__lead"><?php echo esc_html( $yk_lead ); ?></p>
 
@@ -73,7 +83,7 @@ $yk_wa = yatrakraft_whatsapp_url( 'Hi YatraKraft, I read your travel guide and w
 <div class="yk-chips-bar">
 	<div class="yk-wrap">
 		<ul class="yk-chips">
-			<li><a class="<?php echo $yk_is_cat ? '' : 'is-active'; ?>" href="<?php echo esc_url( $yk_blog_url ); ?>">All guides</a></li>
+			<li><a class="<?php echo ( $yk_is_cat || $yk_search ) ? '' : 'is-active'; ?>" href="<?php echo esc_url( $yk_blog_url ); ?>">All guides</a></li>
 			<?php foreach ( $yk_cats as $yk_c ) : ?>
 				<li>
 					<a class="<?php echo ( $yk_current === (int) $yk_c->term_id ) ? 'is-active' : ''; ?>" href="<?php echo esc_url( get_category_link( $yk_c ) ); ?>">
@@ -94,7 +104,7 @@ $yk_wa = yatrakraft_whatsapp_url( 'Hi YatraKraft, I read your travel guide and w
 			$yk_grid_open = false;
 			while ( have_posts() ) :
 				the_post();
-				if ( 0 === $yk_i && 1 === $yk_paged && ! $yk_is_cat ) {
+				if ( 0 === $yk_i && 1 === $yk_paged && ! $yk_is_cat && ! $yk_search ) {
 					yatrakraft_guide_card( true );
 				} else {
 					if ( ! $yk_grid_open ) {
@@ -120,9 +130,19 @@ $yk_wa = yatrakraft_whatsapp_url( 'Hi YatraKraft, I read your travel guide and w
 			?>
 		<?php else : ?>
 			<div class="yk-empty">
-				<h2>No guides here yet</h2>
-				<p>We are writing new guides every week. Meanwhile, ask us anything about your trip.</p>
-				<a class="yk-btn yk-btn--wa" href="<?php echo esc_url( $yk_wa ); ?>" target="_blank" rel="noopener">Ask on WhatsApp</a>
+				<?php if ( $yk_search ) : ?>
+					<h2>No guides found</h2>
+					<p>Try fewer words (for example “Munnar”, “monsoon” or “tea”), browse all guides, or message us and we will answer it for you.</p>
+				<?php else : ?>
+					<h2>No guides here yet</h2>
+					<p>We are writing new guides every week. Meanwhile, ask us anything about your trip.</p>
+				<?php endif; ?>
+				<div class="yk-empty__actions">
+					<?php if ( $yk_search ) : ?>
+						<a class="yk-btn yk-btn--primary" href="<?php echo esc_url( $yk_blog_url ); ?>">All guides</a>
+					<?php endif; ?>
+					<a class="yk-btn yk-btn--wa" href="<?php echo esc_url( $yk_wa ); ?>" target="_blank" rel="noopener">Ask on WhatsApp</a>
+				</div>
 			</div>
 		<?php endif; ?>
 

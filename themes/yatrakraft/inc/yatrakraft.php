@@ -88,7 +88,7 @@ function yatrakraft_enqueue_global() {
 add_action( 'wp_enqueue_scripts', 'yatrakraft_enqueue_global', 30 );
 
 function yatrakraft_is_guides() {
-	return is_home() || is_category();
+	return is_home() || is_category() || is_search();
 }
 
 function yatrakraft_whatsapp_url( $text = '' ) {
@@ -156,8 +156,10 @@ add_filter( 'body_class', 'yatrakraft_body_class' );
  * @param bool $featured Large featured layout.
  */
 function yatrakraft_guide_card( $featured = false ) {
-	$cats     = get_the_category();
+	$is_post  = 'post' === get_post_type();
+	$cats     = $is_post ? get_the_category() : array();
 	$cat      = $cats ? $cats[0] : null;
+	$type     = $is_post ? null : get_post_type_object( get_post_type() );
 	$minutes  = yatrakraft_reading_time( get_the_ID() );
 	$classes  = $featured ? 'ykg-card ykg-card--featured' : 'ykg-card';
 	$img_size = $featured ? 'large' : 'medium_large';
@@ -178,14 +180,18 @@ function yatrakraft_guide_card( $featured = false ) {
 		<div class="ykg-card__body">
 			<?php if ( $cat ) : ?>
 				<a class="ykg-card__cat" href="<?php echo esc_url( get_category_link( $cat ) ); ?>"><?php echo esc_html( $cat->name ); ?></a>
+			<?php elseif ( $type ) : ?>
+				<span class="ykg-card__cat"><?php echo esc_html( $type->labels->singular_name ); ?></span>
 			<?php endif; ?>
 			<h2 class="ykg-card__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 			<p class="ykg-card__excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), $featured ? 34 : 22 ) ); ?></p>
 			<div class="ykg-card__meta">
-				<span><?php echo esc_html( get_the_date( 'j M Y' ) ); ?></span>
-				<span aria-hidden="true">·</span>
-				<span><?php echo esc_html( sprintf( '%d min read', $minutes ) ); ?></span>
-				<a class="ykg-card__more" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Read guide', 'yatrakraft' ); ?> <span aria-hidden="true">→</span></a>
+				<?php if ( $is_post ) : ?>
+					<span><?php echo esc_html( get_the_date( 'j M Y' ) ); ?></span>
+					<span aria-hidden="true">·</span>
+					<span><?php echo esc_html( sprintf( '%d min read', $minutes ) ); ?></span>
+				<?php endif; ?>
+				<a class="ykg-card__more" href="<?php the_permalink(); ?>"><?php $is_post ? esc_html_e( 'Read guide', 'yatrakraft' ) : esc_html_e( 'View', 'yatrakraft' ); ?> <span aria-hidden="true">→</span></a>
 			</div>
 		</div>
 	</article>
