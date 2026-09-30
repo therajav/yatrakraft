@@ -91,6 +91,7 @@ add_filter( 'travelscape_style', 'yatrakraft_style_defaults', 15 );
 require_once YATRAKRAFT_THEME_DIR . '/inc/customizer.php';
 require_once YATRAKRAFT_THEME_DIR . '/inc/theme-mods.php';
 require_once YATRAKRAFT_THEME_DIR . '/inc/yatrakraft.php';
+require_once YATRAKRAFT_THEME_DIR . '/inc/floating-buttons.php';
 
 /**
  * Optional header button (Customizer → Header → Header Button).

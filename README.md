@@ -19,6 +19,7 @@ have wiped it out. `themes/yatrakraft` is our own child of **Travelscape**:
 | `theme.json` | Travel Journey's font families/sizes (Travelscape skips its runtime theme.json injection for child themes) |
 | `inc/customizer.php` | Optional header button (Customizer → Header → Header Button) |
 | `inc/theme-mods.php` | Carries Travel Journey's Customizer settings over (see below) |
+| `inc/floating-buttons.php`, `assets/js/yk-float.js` | Floating WhatsApp button (page-aware message) + back-to-top; hidden on checkout |
 | `inc/yatrakraft.php` | WTE page detection, template routing, asset enqueue, body classes, profile icon, hides "My Account" menu item, `yatrakraft_guide_card()` |
 | `home.php`, `category.php`, `search.php` → `yk/guides-index.php` | Travel Guides index, category archives and search results |
 | `yk-checkout.php`, `yk-thankyou.php`, `yk/trust-strip.php` | WP Travel Engine checkout / thank-you wrappers |

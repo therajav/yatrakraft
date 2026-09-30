@@ -48,3 +48,49 @@
 	width: 40px; height: 40px; padding: 0; line-height: 0;
 }
 .site-header .header-mobile .top-wrap .menu-toggle svg { display: block; width: 30px; height: 30px; }
+
+/* ---------- Floating WhatsApp + back-to-top (inc/floating-buttons.php) ---------- */
+.yk-float {
+	position: fixed; z-index: 900;
+	right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+	display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+	pointer-events: none;
+}
+.yk-float > * { pointer-events: auto; }
+.yk-float svg { display: block; fill: currentColor; }
+
+.yk-float__wa,
+.yk-float__wa:visited {
+	display: inline-flex; align-items: center; gap: 10px; height: 56px; padding: 0 22px 0 16px;
+	border-radius: 999px; background: #1faa59; color: #fff !important; text-decoration: none !important;
+	font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: 600; line-height: 1;
+	box-shadow: 0 10px 24px rgba(31, 170, 89, .35), 0 2px 6px rgba(15, 34, 48, .15);
+	transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.yk-float__wa svg { width: 26px; height: 26px; flex: none; }
+.yk-float__wa:hover { background: #17924b; transform: translateY(-2px); box-shadow: 0 14px 28px rgba(31, 170, 89, .4), 0 2px 6px rgba(15, 34, 48, .15); }
+.yk-float__wa:focus-visible { outline: 3px solid rgba(31, 170, 89, .45); outline-offset: 3px; }
+
+.yk-float__top {
+	display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: 0 6px 0 0; padding: 0;
+	border: 1px solid #dfe6ea; border-radius: 50%; background: #fff; color: #0b5a86; cursor: pointer;
+	box-shadow: 0 6px 18px rgba(15, 34, 48, .14);
+	opacity: 0; visibility: hidden; transform: translateY(10px);
+	transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s, background-color .15s ease, color .15s ease;
+}
+.yk-float__top.is-visible { opacity: 1; visibility: visible; transform: none; transition: opacity .2s ease, transform .2s ease, visibility 0s, background-color .15s ease, color .15s ease; }
+.yk-float__top svg { width: 24px; height: 24px; }
+.yk-float__top:hover { background: #0b5a86; border-color: #0b5a86; color: #fff; }
+.yk-float__top:focus-visible { outline: 3px solid rgba(11, 90, 134, .35); outline-offset: 2px; }
+
+@media (max-width: 768px) {
+	.yk-float { right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); gap: 10px; }
+	.yk-float__wa { width: 54px; height: 54px; padding: 0; justify-content: center; }
+	.yk-float__wa-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+	.yk-float__wa svg { width: 28px; height: 28px; }
+	.yk-float__top { width: 42px; height: 42px; margin-right: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.yk-float__wa, .yk-float__top { transition: none; }
+}
+@media print { .yk-float { display: none; } }
