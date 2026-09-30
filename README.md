@@ -20,7 +20,7 @@ have wiped it out. `themes/yatrakraft` is our own child of **Travelscape**:
 | `inc/customizer.php` | Optional header button (Customizer → Header → Header Button) |
 | `inc/theme-mods.php` | Carries Travel Journey's Customizer settings over (see below) |
 | `inc/yatrakraft.php` | WTE page detection, template routing, asset enqueue, body classes, profile icon, hides "My Account" menu item, `yatrakraft_guide_card()` |
-| `home.php`, `category.php` → `yk/guides-index.php` | Travel Guides index |
+| `home.php`, `category.php`, `search.php` → `yk/guides-index.php` | Travel Guides index, category archives and search results |
 | `yk-checkout.php`, `yk-thankyou.php`, `yk/trust-strip.php` | WP Travel Engine checkout / thank-you wrappers |
 | `assets/css/yk-global.css` | Header profile icon + alignment (site-wide) |
 | `assets/css/yk-redesign.css` | Guides, checkout, thank-you (only on those pages) |
@@ -79,6 +79,13 @@ Never publish without the owner's go-ahead, and take a Hostinger backup first.
   plus a fixed-size flex box to centre with the profile icon.
 - Travelscape's `style.css` is 74 KB; WPVibe will not read files over 64 KB.
 - WPCode also injects the logo size (56 / 48 / 44 px heights).
+- Travelscape sizes any `#primary` as a content column (`width: 52rem` on
+  no-sidebar archives, 70 % + side padding on pages). Our full-width templates
+  use `<main id="primary">` (the skip link targets it), so `yk-redesign.css`
+  resets it with `body #page main#primary.…`. Keep that reset if you add a
+  new template.
+- Travelscape colours `a:visited` orange; single-class link colours need an
+  explicit `:visited` selector.
 - WPVibe's `write_file` refuses PHP that declares a function the *active* theme
   already declares, even though only one theme loads at runtime. That is why
   this theme's helpers are `yatrakraft_*`, not Travel Journey's `yk_*`. CSS
