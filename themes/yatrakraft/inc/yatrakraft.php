@@ -39,16 +39,61 @@ function yatrakraft_account_page_id() {
 }
 
 /**
+ * Profile photo URL for a user, or '' when they have none of their own.
+ *
+ * Uses the photo saved in the media library first (wp_user_avatar: the attachment
+ * that social login / avatar plugins store), then any avatar plugin hooked into
+ * get_avatar_url(). Gravatar is left to the caller so it can fall back to initials.
+ *
+ * @param WP_User $user User.
+ * @param int     $size Pixel size.
+ */
+function yatrakraft_user_photo_url( $user, $size ) {
+	$attachment_id = (int) get_user_meta( $user->ID, 'wp_user_avatar', true );
+	$url           = $attachment_id ? wp_get_attachment_image_url( $attachment_id, array( $size, $size ) ) : '';
+	return (string) apply_filters( 'yatrakraft_user_photo_url', $url ? $url : '', $user, $size );
+}
+
+/**
+ * Up to two initials from the user's name, e.g. "Raja V" -> "RV".
+ */
+function yatrakraft_user_initials( $user ) {
+	$name  = trim( $user->first_name . ' ' . $user->last_name );
+	$name  = $name ? $name : $user->display_name;
+	$parts = preg_split( '/\s+/u', trim( $name ) );
+	$first = $parts ? mb_substr( $parts[0], 0, 1 ) : '';
+	$last  = count( $parts ) > 1 ? mb_substr( end( $parts ), 0, 1 ) : '';
+	return mb_strtoupper( $first . $last );
+}
+
+/**
  * Profile icon in the header (replaces "My Account" text link).
+ * Logged in: the user's photo, else their Gravatar over their initials.
  */
 function yatrakraft_account_icon() {
-	$logged = is_user_logged_in();
-	$label  = $logged ? 'My account' : 'Log in to your account';
+	$href = esc_url( get_permalink( yatrakraft_account_page_id() ) );
+	$icon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm-8 11a8 8 0 0 1 16 0h-2a6 6 0 0 0-12 0H4Z"/></svg>';
+
+	if ( ! is_user_logged_in() ) {
+		printf( '<a class="yk-account-link" href="%1$s" aria-label="Log in to your account" title="Log in to your account">%2$s</a>', $href, $icon ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above / static SVG.
+		return;
+	}
+
+	$user     = wp_get_current_user();
+	$label    = sprintf( 'My account (%s)', $user->display_name );
+	$initials = yatrakraft_user_initials( $user );
+	$photo    = yatrakraft_user_photo_url( $user, 96 );
+	if ( ! $photo && get_option( 'show_avatars' ) ) {
+		// "blank" = transparent image when there is no Gravatar, so the initials show through.
+		$photo = get_avatar_url( $user->ID, array( 'size' => 96, 'default' => 'blank' ) );
+	}
+
 	printf(
-		'<a class="yk-account-link%1$s" href="%2$s" aria-label="%3$s" title="%3$s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm-8 11a8 8 0 0 1 16 0h-2a6 6 0 0 0-12 0H4Z"/></svg></a>',
-		$logged ? ' is-logged-in' : '',
-		esc_url( get_permalink( yatrakraft_account_page_id() ) ),
-		esc_attr( $label )
+		'<a class="yk-account-link is-logged-in" href="%1$s" aria-label="%2$s" title="%2$s">%3$s%4$s</a>',
+		$href,
+		esc_attr( $label ),
+		$initials ? '<span class="yk-account-link__initials" aria-hidden="true">' . esc_html( $initials ) . '</span>' : $icon, // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG.
+		$photo ? '<img class="yk-account-link__photo" src="' . esc_url( $photo ) . '" alt="" width="44" height="44" decoding="async">' : ''
 	);
 }
 

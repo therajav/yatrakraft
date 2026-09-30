@@ -19,6 +19,16 @@
 .yk-account-link.is-logged-in { border-color: #0b5a86; color: #0b5a86 !important; }
 .yk-account-link.is-logged-in:hover { color: #fff !important; }
 
+/* Logged in: photo (or Gravatar) layered over the user's initials. */
+.yk-account-link.is-logged-in { position: relative; overflow: hidden; background: #eaf2f7; border-width: 2px; }
+.yk-account-link__initials { font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; font-weight: 700; line-height: 1; letter-spacing: .02em; }
+.yk-account-link__photo {
+	position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none;
+	border-radius: 50%; object-fit: cover;
+}
+.yk-account-link.is-logged-in:hover,
+.yk-account-link.is-logged-in:focus-visible { background: #0b5a86; box-shadow: 0 0 0 3px rgba(11, 90, 134, .25); }
+
 /* Desktop: the theme's nav has 10px top / 0 bottom padding, so its text sits ~5px
    below the header's centre line. Match that offset so the icon lines up with the menu text. */
 .site-header .header-desktop .yk-account-link { margin-top: 10px; }
